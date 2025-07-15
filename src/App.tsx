@@ -70,24 +70,9 @@ function App() {
       </header>
 
       {/* Main Content */}
-      <main className="py-8">
+      <main className="py-8 pb-16">
         <ImageConverter />
       </main>
-
-      {/* Footer */}
-      <footer className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-16">
-        <div className="max-w-6xl mx-auto px-6 py-8">
-          <div className="text-center text-sm text-gray-500 dark:text-gray-400">
-            <p>
-              Dibuat dengan React, TypeScript, dan Tailwind CSS.
-              Mendukung format JPEG, PNG, WebP, GIF, dan BMP.
-            </p>
-            <p className="mt-2">
-              Semua pemrosesan dilakukan secara lokal di browser Anda - gambar tidak pernah meninggalkan perangkat Anda.
-            </p>
-          </div>
-        </div>
-      </footer>
 
       {/* Toast Notifications */}
       {toasts.map((toast) => (
