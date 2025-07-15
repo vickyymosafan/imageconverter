@@ -131,38 +131,41 @@ const ImageConverter: React.FC = () => {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-3 mt-6">
+            {/* Primary Action - Takes most space */}
             <Button
               onClick={handleStartConversion}
               disabled={!canStartConversion}
               loading={converter.state.isProcessing}
-              className="flex-1 sm:flex-auto"
-              fullWidth
+              className="flex-1"
             >
               {converter.state.isProcessing ? 'Mengkonversi...' : `Konversi ${fileUpload.files.length} Gambar`}
             </Button>
 
-            {hasResults && (
-              <Button
-                variant="outline"
-                onClick={handleDownloadAll}
-                disabled={download.isDownloading}
-                loading={download.isDownloading}
-                className="sm:flex-none"
-                fullWidth
-              >
-                Unduh ZIP
-              </Button>
-            )}
+            {/* Secondary Actions Container */}
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-2">
+              {hasResults && (
+                <Button
+                  variant="outline"
+                  onClick={handleDownloadAll}
+                  disabled={download.isDownloading}
+                  loading={download.isDownloading}
+                  size="md"
+                  className="sm:w-auto"
+                >
+                  Unduh ZIP
+                </Button>
+              )}
 
-            <Button
-              variant="ghost"
-              onClick={handleClearAll}
-              disabled={converter.state.isProcessing}
-              className="sm:flex-none"
-              fullWidth
-            >
-              Hapus Semua
-            </Button>
+              <Button
+                variant="ghost"
+                onClick={handleClearAll}
+                disabled={converter.state.isProcessing}
+                size="sm"
+                className="sm:w-auto text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
+              >
+                Hapus Semua
+              </Button>
+            </div>
           </div>
         </div>
       )}
