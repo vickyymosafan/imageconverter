@@ -4,6 +4,8 @@ import { useImageConverter } from '../hooks/useImageConverter';
 import { useFileUpload } from '../hooks/useFileUpload';
 import { useDownload } from '../hooks/useDownload';
 
+import { Section, Grid, Flex } from './layout/AppLayout';
+import Card, { CardHeader, CardTitle, CardContent } from './ui/Card';
 import FileUpload from './FileUpload';
 import FileItem from './FileItem';
 import ImagePreview from './ImagePreview';
@@ -17,64 +19,58 @@ const ImageConverter: React.FC = () => {
     original: ImageFile;
     converted?: ConversionResult;
   } | null>(null);
-  
+
   const fileUpload = useFileUpload();
   const converter = useImageConverter();
   const download = useDownload();
-  
+
   const handleFilesAdded = (newFiles: ImageFile[]) => {
     fileUpload.addFiles(newFiles.map(f => f.file));
   };
-  
+
   const handleFileRemove = (id: string) => {
     fileUpload.removeFile(id);
     converter.removeFile(id);
   };
-  
+
   const handleStartConversion = () => {
     if (fileUpload.files.length > 0) {
       converter.convertBatch(fileUpload.files, converter.state.options);
     }
   };
-  
+
   const handlePreview = (imageFile: ImageFile, result?: ConversionResult) => {
     setPreviewImage({ original: imageFile, converted: result });
   };
-  
+
   const handleFormatChange = (format: SupportedFormat) => {
     converter.updateOptions({ outputFormat: format });
   };
-  
+
   const handleQualityChange = (quality: number) => {
     converter.updateOptions({ quality });
   };
-  
+
   const handleDownloadAll = () => {
     if (converter.state.results.length > 0) {
       download.downloadAll(converter.state.results, true);
     }
   };
-  
+
   const handleClearAll = () => {
     fileUpload.clearFiles();
     converter.clearResults();
   };
-  
+
   const canStartConversion = fileUpload.files.length > 0 && !converter.state.isProcessing;
   const hasResults = converter.state.results.length > 0;
-  
+
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 sm:space-y-8">
-      {/* Header */}
-      <div className="text-center">
-        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-          Konverter Gambar
-        </h1>
-        <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-          Konversi gambar Anda ke berbagai format dengan kualitas tinggi
-        </p>
-      </div>
-      
+    <Section
+      spacing="lg"
+      title="Konverter Gambar"
+      description="Konversi gambar Anda ke berbagai format dengan kualitas tinggi"
+    >
       {/* File Upload */}
       <FileUpload
         onFilesAdded={handleFilesAdded}
@@ -83,93 +79,108 @@ const ImageConverter: React.FC = () => {
         }}
         disabled={converter.state.isProcessing}
       />
-      
+
       {/* Error Display */}
       {fileUpload.errors.length > 0 && (
-        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
-          <h3 className="text-sm font-medium text-red-800 dark:text-red-200 mb-2">
-            Kesalahan Unggah
-          </h3>
-          <ul className="text-sm text-red-700 dark:text-red-300 space-y-1">
-            {fileUpload.errors.map((error, index) => (
-              <li key={index}>
-                <strong>{error.file}:</strong> {error.error}
-              </li>
-            ))}
-          </ul>
-          <Button
-            size="sm"
-            variant="outline"
-            onClick={fileUpload.clearErrors}
-            className="mt-2"
-          >
-            Tutup
-          </Button>
-        </div>
+        <Card variant="outlined" className="border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20">
+          <CardHeader>
+            <CardTitle className="text-red-800 dark:text-red-200 text-sm">
+              Kesalahan Unggah
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="text-sm text-red-700 dark:text-red-300 space-y-1 mb-4">
+              {fileUpload.errors.map((error, index) => (
+                <li key={index}>
+                  <strong>{error.file}:</strong> {error.error}
+                </li>
+              ))}
+            </ul>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={fileUpload.clearErrors}
+              className="border-red-300 text-red-700 hover:bg-red-100 dark:border-red-600 dark:text-red-300 dark:hover:bg-red-900/30"
+            >
+              Tutup
+            </Button>
+          </CardContent>
+        </Card>
       )}
-      
+
       {/* Conversion Settings */}
       {fileUpload.files.length > 0 && (
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
-            Pengaturan Konversi
-          </h2>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <FormatSelector
-              selectedFormat={converter.state.options.outputFormat}
-              onFormatChange={handleFormatChange}
-              disabled={converter.state.isProcessing}
-            />
-            
-            <QualitySlider
-              quality={converter.state.options.quality}
-              onQualityChange={handleQualityChange}
-              disabled={converter.state.isProcessing}
-              format={converter.state.options.outputFormat}
-            />
-          </div>
-          
-          <div className="flex flex-col sm:flex-row gap-3 mt-6">
-            {/* Primary Action - Takes most space */}
-            <Button
-              onClick={handleStartConversion}
-              disabled={!canStartConversion}
-              loading={converter.state.isProcessing}
-              className="flex-1"
-            >
-              {converter.state.isProcessing ? 'Mengkonversi...' : `Konversi ${fileUpload.files.length} Gambar`}
-            </Button>
-
-            {/* Secondary Actions Container */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-2">
-              {hasResults && (
-                <Button
-                  variant="outline"
-                  onClick={handleDownloadAll}
-                  disabled={download.isDownloading}
-                  loading={download.isDownloading}
-                  size="md"
-                  className="sm:w-auto"
-                >
-                  Unduh ZIP
-                </Button>
-              )}
-
-              <Button
-                variant="ghost"
-                onClick={handleClearAll}
+        <Card variant="elevated">
+          <CardHeader>
+            <CardTitle>Pengaturan Konversi</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Grid cols={2} gap="lg" className="mb-6">
+              <FormatSelector
+                selectedFormat={converter.state.options.outputFormat}
+                onFormatChange={handleFormatChange}
                 disabled={converter.state.isProcessing}
-                size="sm"
-                className="sm:w-auto text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
+              />
+
+              <QualitySlider
+                quality={converter.state.options.quality}
+                onQualityChange={handleQualityChange}
+                disabled={converter.state.isProcessing}
+                format={converter.state.options.outputFormat}
+              />
+            </Grid>
+
+            <Flex direction="col" gap="sm" className="sm:flex-row">
+              {/* Primary Action */}
+              <Button
+                onClick={handleStartConversion}
+                disabled={!canStartConversion}
+                loading={converter.state.isProcessing}
+                className="flex-1"
+                size="lg"
               >
-                Hapus Semua
+                {converter.state.isProcessing ? 'Mengkonversi...' : `Konversi ${fileUpload.files.length} Gambar`}
               </Button>
-            </div>
-          </div>
-        </div>
+
+              {/* Secondary Actions */}
+              <Flex gap="sm" className="sm:flex-row">
+                {hasResults && (
+                  <Button
+                    variant="outline"
+                    onClick={handleDownloadAll}
+                    disabled={download.isDownloading}
+                    loading={download.isDownloading}
+                    size="md"
+                    icon={
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                    }
+                  >
+                    Unduh ZIP
+                  </Button>
+                )}
+
+                <Button
+                  variant="ghost"
+                  onClick={handleClearAll}
+                  disabled={converter.state.isProcessing}
+                  size="md"
+                  className="text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
+                  icon={
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                  }
+                >
+                  Hapus Semua
+                </Button>
+              </Flex>
+            </Flex>
+          </CardContent>
+        </Card>
       )}
-      
+
       {/* Conversion Progress */}
       {(converter.state.isProcessing || hasResults) && (
         <ConversionProgress
@@ -180,19 +191,24 @@ const ImageConverter: React.FC = () => {
           onCancel={converter.cancelConversion}
         />
       )}
-      
+
       {/* File List */}
       {fileUpload.files.length > 0 && (
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-            File ({fileUpload.files.length})
-          </h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Section spacing="md">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+              File ({fileUpload.files.length})
+            </h2>
+            <div className="text-sm text-gray-500 dark:text-gray-400">
+              {hasResults && `${converter.state.results.length} selesai`}
+            </div>
+          </div>
+
+          <Grid cols={2} gap="md">
             {fileUpload.files.map((file) => {
               const result = converter.state.results.find(r => r.id === file.id);
               const progress = converter.state.progress[file.id];
-              
+
               return (
                 <FileItem
                   key={file.id}
@@ -205,10 +221,10 @@ const ImageConverter: React.FC = () => {
                 />
               );
             })}
-          </div>
-        </div>
+          </Grid>
+        </Section>
       )}
-      
+
       {/* Image Preview Modal */}
       {previewImage && (
         <ImagePreview
@@ -217,7 +233,7 @@ const ImageConverter: React.FC = () => {
           onClose={() => setPreviewImage(null)}
         />
       )}
-    </div>
+    </Section>
   );
 };
 

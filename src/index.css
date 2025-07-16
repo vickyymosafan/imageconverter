@@ -1,3 +1,4 @@
+@import './styles/design-system.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,37 +6,190 @@
 @layer base {
   html {
     font-family: 'Inter', system-ui, sans-serif;
+    scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100;
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg-tertiary);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border-secondary);
+    border-radius: var(--radius-sm);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-tertiary);
   }
 }
 
 @layer components {
+  /* Enhanced drag area with better visual feedback */
   .drag-area {
-    @apply border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8 text-center transition-colors duration-200;
+    border: 2px dashed var(--color-border-secondary);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-2xl);
+    text-align: center;
+    transition: all var(--transition-normal);
+    background-color: var(--color-bg-primary);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .drag-area::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+      transparent,
+      rgba(59, 130, 246, 0.1),
+      transparent
+    );
+    transition: left var(--transition-slow);
   }
 
   .drag-area.drag-over {
-    @apply border-primary-500 bg-primary-50 dark:bg-primary-900/20;
+    border-color: var(--color-primary-500);
+    background-color: var(--color-primary-50);
+    transform: scale(1.02);
   }
 
+  .dark .drag-area.drag-over {
+    background-color: rgb(59 130 246 / 0.1);
+  }
+
+  .drag-area.drag-over::before {
+    left: 100%;
+  }
+
+  /* Enhanced file card with better hover effects */
   .file-card {
-    @apply bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4 transition-all duration-200 hover:shadow-md;
+    background-color: var(--color-bg-primary);
+    border: 1px solid var(--color-border-primary);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-normal);
+    position: relative;
   }
 
+  .file-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+    border-color: var(--color-primary-300);
+  }
+
+  /* Enhanced progress bar with gradient and animation */
   .progress-bar {
-    @apply w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden;
+    width: 100%;
+    background-color: var(--color-bg-tertiary);
+    border-radius: var(--radius-sm);
+    height: 8px;
+    overflow: hidden;
+    position: relative;
   }
 
   .progress-fill {
-    @apply h-full bg-gradient-to-r from-primary-500 to-primary-600 transition-all duration-300 ease-out;
+    height: 100%;
+    background: linear-gradient(90deg,
+      var(--color-primary-500),
+      var(--color-primary-400),
+      var(--color-primary-500)
+    );
+    background-size: 200% 100%;
+    border-radius: var(--radius-sm);
+    transition: width var(--transition-normal) ease-out;
+    animation: progressShine 2s infinite;
+  }
+
+  @keyframes progressShine {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  /* Status indicators */
+  .status-success {
+    color: var(--color-success-600);
+    background-color: var(--color-success-50);
+  }
+
+  .status-warning {
+    color: var(--color-warning-600);
+    background-color: var(--color-warning-50);
+  }
+
+  .status-error {
+    color: var(--color-error-600);
+    background-color: var(--color-error-50);
+  }
+
+  /* Enhanced button styles */
+  .btn-primary {
+    @extend .button-base;
+    background-color: var(--color-primary-600);
+    color: white;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: var(--text-sm);
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    background-color: var(--color-primary-700);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-primary:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  .btn-secondary {
+    @extend .button-base;
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border-primary);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: var(--text-sm);
+  }
+
+  .btn-secondary:hover:not(:disabled) {
+    background-color: var(--color-bg-tertiary);
+    border-color: var(--color-border-secondary);
   }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .glass-effect {
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .dark .glass-effect {
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 }

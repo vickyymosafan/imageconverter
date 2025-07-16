@@ -1,5 +1,6 @@
 import React from 'react';
 import { ConversionStatus } from '../../types';
+import { cn } from '../../utils/cn';
 
 export interface ProgressBarProps {
   progress: number;
@@ -59,9 +60,9 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   const clampedProgress = Math.max(0, Math.min(100, progress));
   
   return (
-    <div className={`w-full ${className}`}>
+    <div className={cn('w-full', className)}>
       {(showPercentage || showStatus) && (
-        <div className="flex justify-between items-center mb-1">
+        <div className="flex justify-between items-center mb-2">
           {showStatus && (
             <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
               {getStatusText()}
@@ -74,12 +75,14 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
           )}
         </div>
       )}
-      
-      <div className={`progress-bar ${sizeClasses[size]}`}>
+
+      <div className={cn('progress-bar', sizeClasses[size])}>
         <div
-          className={`progress-fill ${getStatusColor()} ${
-            animated && status === 'processing' ? 'animate-pulse' : ''
-          }`}
+          className={cn(
+            'progress-fill transition-all duration-500 ease-out',
+            getStatusColor(),
+            animated && status === 'processing' && 'animate-pulse'
+          )}
           style={{ width: `${clampedProgress}%` }}
           role="progressbar"
           aria-valuenow={clampedProgress}
