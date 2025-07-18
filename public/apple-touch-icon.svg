@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  <defs>
+    <linearGradient id="appleBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6"/>
+      <stop offset="50%" style="stop-color:#2563eb"/>
+      <stop offset="100%" style="stop-color:#1d4ed8"/>
+    </linearGradient>
+    
+    <linearGradient id="appleAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981"/>
+      <stop offset="100%" style="stop-color:#059669"/>
+    </linearGradient>
+    
+    <filter id="appleGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- iOS rounded rectangle background -->
+  <rect width="180" height="180" rx="40" fill="url(#appleBg)" filter="url(#appleGlow)"/>
+  
+  <!-- Main image container -->
+  <rect x="30" y="45" width="120" height="80" rx="8" fill="white" opacity="0.95"/>
+  <rect x="35" y="50" width="110" height="70" rx="6" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  
+  <!-- Landscape content -->
+  <path d="M40 105 L60 85 L80 95 L100 80 L120 90 L140 75 L145 80 L145 115 L40 115 Z" 
+        fill="#94a3b8" opacity="0.7"/>
+  
+  <!-- Sun -->
+  <circle cx="125" cy="65" r="8" fill="#fbbf24" opacity="0.9"/>
+  
+  <!-- Conversion arrow with more prominence -->
+  <path d="M50 135 Q90 145 130 135" stroke="url(#appleAccent)" 
+        stroke-width="8" fill="none" stroke-linecap="round"/>
+  
+  <!-- Arrow head -->
+  <path d="M125 130 L130 135 L125 140" stroke="url(#appleAccent)" 
+        stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Format indicators as larger elements -->
+  <rect x="25" y="150" width="18" height="12" rx="3" fill="#ef4444" opacity="0.9"/>
+  <rect x="48" y="150" width="18" height="12" rx="3" fill="#f59e0b" opacity="0.9"/>
+  <rect x="71" y="150" width="18" height="12" rx="3" fill="#10b981" opacity="0.9"/>
+  <rect x="94" y="150" width="18" height="12" rx="3" fill="#3b82f6" opacity="0.9"/>
+  <rect x="117" y="150" width="18" height="12" rx="3" fill="#8b5cf6" opacity="0.9"/>
+  <rect x="140" y="150" width="18" height="12" rx="3" fill="#ec4899" opacity="0.9"/>
+  
+  <!-- Sparkle effects -->
+  <circle cx="155" cy="30" r="3" fill="white" opacity="0.8">
+    <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="25" cy="60" r="2" fill="white" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;0.2;0.6" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="160" cy="120" r="2.5" fill="white" opacity="0.7">
+    <animate attributeName="opacity" values="0.7;0.3;0.7" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+</svg>

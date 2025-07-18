@@ -1,0 +1,68 @@
+{
+  "name": "ImageConverter Pro - Professional Image Conversion Tool",
+  "short_name": "ImageConverter Pro",
+  "description": "Professional image conversion tool with HD quality preservation, unlimited batch processing, and drag & drop interface.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "id",
+  "categories": ["productivity", "utilities", "photo"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "32x32",
+      "type": "image/svg+xml",
+      "purpose": "favicon"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "64x64",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.svg",
+      "sizes": "180x180",
+      "type": "image/svg+xml",
+      "purpose": "apple-touch-icon"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/icon.svg",
+      "sizes": "1280x720",
+      "type": "image/svg+xml",
+      "form_factor": "wide",
+      "label": "ImageConverter Pro - Desktop View"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "750x1334",
+      "type": "image/svg+xml",
+      "form_factor": "narrow",
+      "label": "ImageConverter Pro - Mobile View"
+    }
+  ],
+  "features": [
+    "Cross Platform",
+    "Background Sync",
+    "Offline Support"
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}

@@ -20,10 +20,28 @@ const AppHeader: React.FC = () => {
             <Tooltip>
               <TooltipTrigger>
                 <div className="relative group">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-primary-500 via-primary-600 to-primary-700 rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group-hover:rotate-3 logo-glow">
-                    <svg className="w-4 h-4 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M4 4h16v12H4V4zm2 2v8h12V6H6zm2 2h8v4H8V8zm10 8v2H6v-2h12z"/>
-                      <path d="M9 9h6v2H9V9z"/>
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-primary-500 via-primary-600 to-primary-700 rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group-hover:rotate-3 logo-glow overflow-hidden">
+                    <svg className="w-6 h-6 sm:w-8 sm:h-8" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      {/* Image frame */}
+                      <rect x="6" y="8" width="20" height="14" rx="1.5" fill="white" opacity="0.95"/>
+                      <rect x="7" y="9" width="18" height="12" rx="1" fill="#f3f4f6"/>
+
+                      {/* Mountain landscape */}
+                      <path d="M8 19 L11 16 L14 17 L17 14 L20 16 L23 13 L24 14 L24 20 L8 20 Z" fill="#9ca3af" opacity="0.6"/>
+
+                      {/* Sun */}
+                      <circle cx="21" cy="12" r="1.5" fill="#fbbf24"/>
+
+                      {/* Conversion arrow */}
+                      <path d="M10 24 Q16 26 22 24" stroke="#10b981" strokeWidth="2" fill="none" strokeLinecap="round"/>
+                      <path d="M21 23 L22 24 L21 25" stroke="#10b981" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+
+                      {/* Format dots */}
+                      <circle cx="8" cy="28" r="1" fill="#ef4444"/>
+                      <circle cx="12" cy="28" r="1" fill="#f59e0b"/>
+                      <circle cx="16" cy="28" r="1" fill="#10b981"/>
+                      <circle cx="20" cy="28" r="1" fill="#3b82f6"/>
+                      <circle cx="24" cy="28" r="1" fill="#8b5cf6"/>
                     </svg>
                   </div>
                   <div className="absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-green-500 rounded-full border-2 border-white dark:border-gray-900 animate-pulse shadow-sm"></div>

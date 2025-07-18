@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <!-- Gradient definitions -->
+    <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#2563eb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="shadowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e40af;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#1e3a8a;stop-opacity:0.1" />
+    </linearGradient>
+    
+    <!-- Filter for glow effect -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background circle with gradient -->
+  <circle cx="32" cy="32" r="30" fill="url(#primaryGradient)" filter="url(#glow)"/>
+  
+  <!-- Shadow/depth effect -->
+  <circle cx="32" cy="34" r="28" fill="url(#shadowGradient)" opacity="0.3"/>
+  
+  <!-- Main image frame -->
+  <rect x="12" y="16" width="40" height="28" rx="3" ry="3" 
+        fill="white" stroke="none" opacity="0.95"/>
+  
+  <!-- Image content area -->
+  <rect x="14" y="18" width="36" height="24" rx="2" ry="2" 
+        fill="#f3f4f6" stroke="#e5e7eb" stroke-width="0.5"/>
+  
+  <!-- Mountain/landscape icon inside image -->
+  <path d="M16 36 L22 28 L28 32 L34 26 L40 30 L46 24 L48 26 L48 38 L16 38 Z" 
+        fill="#9ca3af" opacity="0.6"/>
+  
+  <!-- Sun/circle in image -->
+  <circle cx="42" cy="24" r="3" fill="#fbbf24" opacity="0.8"/>
+  
+  <!-- Conversion arrows - curved arrow indicating transformation -->
+  <path d="M20 48 Q32 52 44 48" stroke="url(#accentGradient)" 
+        stroke-width="3" fill="none" stroke-linecap="round"/>
+  
+  <!-- Arrow head -->
+  <path d="M42 46 L44 48 L42 50" stroke="url(#accentGradient)" 
+        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Format indicators (small rectangles representing different formats) -->
+  <rect x="8" y="50" width="6" height="4" rx="1" fill="#ef4444" opacity="0.8"/>
+  <rect x="16" y="50" width="6" height="4" rx="1" fill="#f59e0b" opacity="0.8"/>
+  <rect x="24" y="50" width="6" height="4" rx="1" fill="#10b981" opacity="0.8"/>
+  <rect x="32" y="50" width="6" height="4" rx="1" fill="#3b82f6" opacity="0.8"/>
+  <rect x="40" y="50" width="6" height="4" rx="1" fill="#8b5cf6" opacity="0.8"/>
+  <rect x="48" y="50" width="6" height="4" rx="1" fill="#ec4899" opacity="0.8"/>
+  
+  <!-- Sparkle effects for "pro" feeling -->
+  <circle cx="52" cy="12" r="1.5" fill="white" opacity="0.9">
+    <animate attributeName="opacity" values="0.9;0.3;0.9" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="8" cy="20" r="1" fill="white" opacity="0.7">
+    <animate attributeName="opacity" values="0.7;0.2;0.7" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="56" cy="40" r="1.2" fill="white" opacity="0.8">
+    <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+</svg>
