@@ -2,6 +2,10 @@ import React, { useCallback, useState, useRef } from 'react';
 import { processImageFiles } from '../utils/fileUtils';
 import { ImageFile } from '../types';
 import Button from './ui/Button';
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui/shadcn/tooltip';
+import { Badge } from './ui/shadcn/badge';
+import { UploadIcon, AddIcon, QualityIcon, CheckIcon } from './ui/common/Icons';
+import { LoadingSpinner } from './ui/common/LoadingStates';
 
 export interface FileUploadProps {
   onFilesAdded: (files: ImageFile[]) => void;
@@ -112,7 +116,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
     <div className={`w-full ${className}`}>
       <div
         className={`
-          drag-area cursor-pointer
+          drag-area cursor-pointer animate-fade-in-up
           ${isDragOver ? 'drag-over' : ''}
           ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
           ${isProcessing ? 'pointer-events-none' : ''}
@@ -157,20 +161,10 @@ const FileUpload: React.FC<FileUploadProps> = ({
             </>
           ) : (
             <>
-              <div className="w-16 h-16 text-gray-400 dark:text-gray-500">
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  className="w-full h-full"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                  />
-                </svg>
+              <div className={`transition-all duration-300 ${
+                isDragOver ? 'scale-110 text-primary-500' : 'text-gray-400 dark:text-gray-500'
+              }`}>
+                <UploadIcon size="xl" />
               </div>
               
               <div className="text-center space-y-2">
@@ -185,26 +179,72 @@ const FileUpload: React.FC<FileUploadProps> = ({
                 </p>
               </div>
               
-              <div className="text-center space-y-1">
-                <p className="text-xs text-gray-500 dark:text-gray-400">
-                  Format yang didukung: {supportedFormats.join(', ')}
-                </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
-                  Tanpa batas jumlah file dan ukuran file
-                </p>
+              <div className="text-center space-y-3">
+                <div className="space-y-2">
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    Format yang didukung:
+                  </p>
+                  <div className="flex flex-wrap justify-center gap-1">
+                    {supportedFormats.map((format) => (
+                      <Tooltip key={format}>
+                        <TooltipTrigger>
+                          <Badge variant="outline" className="text-xs">
+                            {format.toUpperCase()}
+                          </Badge>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Format {format.toUpperCase()} didukung</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex items-center justify-center space-x-4 text-xs text-gray-500 dark:text-gray-400">
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <div className="flex items-center space-x-1">
+                        <CheckIcon size="sm" />
+                        <span>Tanpa batas file</span>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Upload sebanyak mungkin file tanpa batasan</p>
+                    </TooltipContent>
+                  </Tooltip>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <div className="flex items-center space-x-1">
+                        <QualityIcon size="sm" />
+                        <span>Kualitas HD</span>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Konversi dengan kualitas tinggi 90-95%</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
               </div>
               
-              <Button
-                variant="outline"
-                size="sm"
-                disabled={disabled}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleClick();
-                }}
-              >
-                Pilih File
-              </Button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={disabled}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleClick();
+                    }}
+                    className="transition-all duration-200 hover:scale-105"
+                  >
+                    <AddIcon className="mr-2" size="sm" />
+                    Pilih File
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Klik untuk membuka file browser</p>
+                </TooltipContent>
+              </Tooltip>
             </>
           )}
         </div>

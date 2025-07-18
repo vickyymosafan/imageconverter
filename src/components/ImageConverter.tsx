@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { ImageFile, ConversionResult, SupportedFormat } from '../types';
 import { useImageConverter } from '../hooks/useImageConverter';
 import { useFileUpload } from '../hooks/useFileUpload';
@@ -13,6 +13,7 @@ import ConversionProgress from './ConversionProgress';
 import Button from './ui/Button';
 import FormatSelector from './ui/FormatSelector';
 import QualitySlider from './ui/QualitySlider';
+import { announceToScreenReader, announceProgress, announceSuccess, announceError } from '../utils/accessibilityUtils';
 
 const ImageConverter: React.FC = () => {
   const [previewImage, setPreviewImage] = useState<{
@@ -26,6 +27,7 @@ const ImageConverter: React.FC = () => {
 
   const handleFilesAdded = (newFiles: ImageFile[]) => {
     fileUpload.addFiles(newFiles.map(f => f.file));
+    announceToScreenReader(`${newFiles.length} file(s) added for conversion`, 'polite');
   };
 
   const handleFileRemove = (id: string) => {
@@ -35,6 +37,7 @@ const ImageConverter: React.FC = () => {
 
   const handleStartConversion = () => {
     if (fileUpload.files.length > 0) {
+      announceToScreenReader('Starting batch conversion...', 'polite');
       converter.convertBatch(fileUpload.files, converter.state.options);
     }
   };
@@ -53,6 +56,7 @@ const ImageConverter: React.FC = () => {
 
   const handleDownloadAll = () => {
     if (converter.state.results.length > 0) {
+      announceSuccess('Downloading all converted files', `${converter.state.results.length} files`);
       download.downloadAll(converter.state.results, true);
     }
   };
@@ -65,17 +69,45 @@ const ImageConverter: React.FC = () => {
   const canStartConversion = fileUpload.files.length > 0 && !converter.state.isProcessing;
   const hasResults = converter.state.results.length > 0;
 
+  // Announce conversion progress
+  useEffect(() => {
+    if (converter.state.isProcessing && converter.state.totalCount > 0) {
+      const completed = converter.state.results.length;
+      const total = converter.state.totalCount;
+
+      if (completed > 0) {
+        announceProgress(completed, total, 'Image conversion');
+      }
+    }
+  }, [converter.state.results.length, converter.state.totalCount, converter.state.isProcessing]);
+
+  // Announce conversion completion
+  useEffect(() => {
+    if (!converter.state.isProcessing && hasResults && converter.state.totalCount > 0) {
+      const completed = converter.state.results.length;
+      const total = converter.state.totalCount;
+
+      if (completed === total) {
+        announceSuccess('Batch conversion completed', `All ${total} files converted successfully`);
+      } else if (completed > 0) {
+        announceSuccess('Partial conversion completed', `${completed} of ${total} files converted`);
+      }
+    }
+  }, [converter.state.isProcessing, hasResults, converter.state.results.length, converter.state.totalCount]);
+
   return (
     <Section
       spacing="lg"
       title="Konverter Gambar"
       description="Konversi gambar Anda ke berbagai format dengan kualitas tinggi"
+      className="focus-within:ring-2 focus-within:ring-primary-500/20 rounded-lg"
     >
       {/* File Upload */}
       <FileUpload
         onFilesAdded={handleFilesAdded}
         onError={(errors) => {
           console.error('Kesalahan unggah:', errors);
+          announceError('File upload failed', 'File Upload', errors.map(e => e.error));
         }}
         disabled={converter.state.isProcessing}
       />
@@ -138,6 +170,7 @@ const ImageConverter: React.FC = () => {
                 loading={converter.state.isProcessing}
                 className="flex-1"
                 size="lg"
+                aria-label={converter.state.isProcessing ? 'Converting images in progress' : `Convert ${fileUpload.files.length} images to ${converter.state.options.outputFormat} format`}
               >
                 {converter.state.isProcessing ? 'Mengkonversi...' : `Konversi ${fileUpload.files.length} Gambar`}
               </Button>
@@ -151,6 +184,7 @@ const ImageConverter: React.FC = () => {
                     disabled={download.isDownloading}
                     loading={download.isDownloading}
                     size="md"
+                    aria-label={`Download all ${converter.state.results.length} converted images as ZIP file`}
                     icon={
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -226,13 +260,12 @@ const ImageConverter: React.FC = () => {
       )}
 
       {/* Image Preview Modal */}
-      {previewImage && (
-        <ImagePreview
-          original={previewImage.original}
-          converted={previewImage.converted}
-          onClose={() => setPreviewImage(null)}
-        />
-      )}
+      <ImagePreview
+        open={!!previewImage}
+        original={previewImage?.original}
+        converted={previewImage?.converted}
+        onClose={() => setPreviewImage(null)}
+      />
     </Section>
   );
 };

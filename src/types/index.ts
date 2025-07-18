@@ -1,3 +1,6 @@
+// Re-export common types
+export * from './common';
+
 // Format gambar yang didukung
 export type SupportedFormat = 'jpeg' | 'png' | 'webp' | 'gif' | 'bmp';
 
@@ -59,7 +62,7 @@ export interface ConversionResult {
   processingTime: number; // in milliseconds
 }
 
-// Conversion progress status
+// Conversion progress status (extends StatusType)
 export type ConversionStatus = 'pending' | 'processing' | 'completed' | 'error';
 
 // Conversion progress interface

@@ -1,5 +1,7 @@
 import React from 'react';
 import { SupportedFormat } from '../../types';
+import { Slider } from './shadcn/slider';
+import { cn } from '../../lib/utils';
 
 export interface QualitySliderProps {
   quality: number;
@@ -64,30 +66,19 @@ const QualitySlider: React.FC<QualitySliderProps> = ({
         </div>
       </div>
       
-      <div className="relative">
-        <input
-          type="range"
-          min="0.1"
-          max="1"
-          step="0.05"
-          value={quality}
-          onChange={(e) => onQualityChange(parseFloat(e.target.value))}
+      <div className="relative space-y-2">
+        <Slider
+          value={[quality]}
+          onValueChange={(values) => onQualityChange(values[0])}
+          min={0.1}
+          max={1}
+          step={0.05}
           disabled={disabled}
-          className={`
-            w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer
-            slider-thumb:appearance-none slider-thumb:w-4 slider-thumb:h-4 slider-thumb:rounded-full
-            slider-thumb:bg-primary-600 slider-thumb:cursor-pointer slider-thumb:border-0
-            slider-thumb:shadow-md slider-thumb:transition-all slider-thumb:duration-200
-            hover:slider-thumb:bg-primary-700 focus:slider-thumb:ring-2 focus:slider-thumb:ring-primary-500
-            ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
-          `}
-          style={{
-            background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${percentage}%, #e5e7eb ${percentage}%, #e5e7eb 100%)`,
-          }}
+          className={cn("w-full", disabled && "opacity-50")}
         />
-        
+
         {/* Penanda kualitas */}
-        <div className="flex justify-between text-xs text-gray-400 dark:text-gray-500 mt-1">
+        <div className="flex justify-between text-xs text-gray-400 dark:text-gray-500">
           <span>Rendah</span>
           <span>Sedang</span>
           <span>Tinggi</span>

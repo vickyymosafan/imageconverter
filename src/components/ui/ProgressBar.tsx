@@ -1,6 +1,7 @@
 import React from 'react';
 import { ConversionStatus } from '../../types';
-import { cn } from '../../utils/cn';
+import { cn } from '../../lib/utils';
+import { Progress } from './shadcn/progress';
 
 export interface ProgressBarProps {
   progress: number;
@@ -27,20 +28,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
     lg: 'h-3',
   };
   
-  const getStatusColor = () => {
-    switch (status) {
-      case 'pending':
-        return 'bg-gray-300 dark:bg-gray-600';
-      case 'processing':
-        return 'bg-gradient-to-r from-primary-500 to-primary-600';
-      case 'completed':
-        return 'bg-gradient-to-r from-green-500 to-green-600';
-      case 'error':
-        return 'bg-gradient-to-r from-red-500 to-red-600';
-      default:
-        return 'bg-gray-300 dark:bg-gray-600';
-    }
-  };
+
   
   const getStatusText = () => {
     switch (status) {
@@ -76,21 +64,19 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
         </div>
       )}
 
-      <div className={cn('progress-bar', sizeClasses[size])}>
-        <div
-          className={cn(
-            'progress-fill transition-all duration-500 ease-out',
-            getStatusColor(),
-            animated && status === 'processing' && 'animate-pulse'
-          )}
-          style={{ width: `${clampedProgress}%` }}
-          role="progressbar"
-          aria-valuenow={clampedProgress}
-          aria-valuemin={0}
-          aria-valuemax={100}
-          aria-label={`${getStatusText()} - ${Math.round(clampedProgress)}%`}
-        />
-      </div>
+      <Progress
+        value={clampedProgress}
+        className={cn(
+          sizeClasses[size],
+          'transition-all duration-500 ease-out',
+          animated && status === 'processing' && 'animate-pulse',
+          // Custom progress colors based on status
+          status === 'completed' && '[&>div]:bg-green-500',
+          status === 'error' && '[&>div]:bg-red-500',
+          status === 'processing' && '[&>div]:bg-primary-500',
+          status === 'pending' && '[&>div]:bg-gray-400'
+        )}
+      />
     </div>
   );
 };

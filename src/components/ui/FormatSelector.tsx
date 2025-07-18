@@ -1,5 +1,7 @@
 import React from 'react';
 import { SupportedFormat } from '../../types';
+import { ToggleGroup, ToggleGroupItem } from './shadcn/toggle-group';
+import { cn } from '../../lib/utils';
 
 export interface FormatSelectorProps {
   selectedFormat: SupportedFormat;
@@ -33,33 +35,29 @@ const FormatSelector: React.FC<FormatSelectorProps> = ({
   const formats: SupportedFormat[] = ['jpeg', 'png', 'webp', 'gif', 'bmp'];
   
   return (
-    <div className={`space-y-3 ${className}`}>
+    <div className={cn("space-y-3", className)}>
       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
         Format Output
       </label>
-      
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+
+      <ToggleGroup
+        type="single"
+        value={selectedFormat}
+        onValueChange={(value) => value && onFormatChange(value as SupportedFormat)}
+        variant="outline"
+        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 w-full"
+        disabled={disabled}
+      >
         {formats.map((format) => (
-          <button
+          <ToggleGroupItem
             key={format}
-            type="button"
-            onClick={() => onFormatChange(format)}
-            disabled={disabled}
-            className={`
-              relative p-3 rounded-lg border-2 transition-all duration-200
-              ${
-                selectedFormat === format
-                  ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
-                  : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
-              }
-              ${
-                disabled
-                  ? 'opacity-50 cursor-not-allowed'
-                  : 'cursor-pointer hover:shadow-sm'
-              }
-            `}
-            aria-pressed={selectedFormat === format}
+            value={format}
+            className={cn(
+              "relative p-3 h-auto flex-col gap-1 data-[state=on]:bg-primary-50 data-[state=on]:border-primary-500 dark:data-[state=on]:bg-primary-900/20",
+              disabled && "opacity-50 cursor-not-allowed"
+            )}
             title={formatDescriptions[format]}
+            disabled={disabled}
           >
             <div className="text-center">
               <div className="text-sm font-semibold text-gray-900 dark:text-gray-100">
@@ -69,7 +67,7 @@ const FormatSelector: React.FC<FormatSelectorProps> = ({
                 .{format === 'jpeg' ? 'jpg' : format}
               </div>
             </div>
-            
+
             {selectedFormat === format && (
               <div className="absolute -top-1 -right-1 w-4 h-4 bg-primary-500 rounded-full flex items-center justify-center">
                 <svg
@@ -85,10 +83,10 @@ const FormatSelector: React.FC<FormatSelectorProps> = ({
                 </svg>
               </div>
             )}
-          </button>
+          </ToggleGroupItem>
         ))}
-      </div>
-      
+      </ToggleGroup>
+
       <div className="text-xs text-gray-500 dark:text-gray-400">
         {formatDescriptions[selectedFormat]}
       </div>

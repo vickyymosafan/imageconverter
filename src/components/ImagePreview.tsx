@@ -2,12 +2,19 @@ import React, { useState } from 'react';
 import { ImageFile, ConversionResult } from '../types';
 import { formatFileSize } from '../utils/fileUtils';
 import Button from './ui/Button';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from './ui/shadcn/dialog';
 
 export interface ImagePreviewProps {
-  original: ImageFile;
+  original?: ImageFile;
   converted?: ConversionResult;
   showComparison?: boolean;
   onClose: () => void;
+  open?: boolean;
 }
 
 const ImagePreview: React.FC<ImagePreviewProps> = ({
@@ -15,21 +22,15 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
   converted,
   showComparison = true,
   onClose,
+  open = true,
 }) => {
   const [activeTab, setActiveTab] = useState<'original' | 'converted'>('original');
   const [isComparisonMode, setIsComparisonMode] = useState(false);
-  
-  const handleBackdropClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
-  
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      onClose();
-    }
-  };
+
+  // Don't render if no original image
+  if (!original) {
+    return null;
+  }
   
   const renderImageInfo = (file: ImageFile | ConversionResult, title: string) => (
     <div className="space-y-2">
@@ -68,22 +69,16 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
   );
   
   return (
-    <div
-      className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4"
-      onClick={handleBackdropClick}
-      onKeyDown={handleKeyDown}
-      tabIndex={-1}
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="preview-title"
-    >
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-6xl w-full max-h-full overflow-hidden">
-        {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-          <h2 id="preview-title" className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+    <Dialog open={open} onOpenChange={(isOpen) => !isOpen && onClose()}>
+      <DialogContent
+        className="max-w-6xl w-full max-h-[90vh] overflow-hidden p-0"
+        showCloseButton={false}
+      >
+        <DialogHeader className="flex flex-row items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+          <DialogTitle className="text-lg font-semibold text-gray-900 dark:text-gray-100">
             Pratinjau Gambar - {original.name}
-          </h2>
-          
+          </DialogTitle>
+
           <div className="flex items-center space-x-2">
             {converted && showComparison && (
               <Button
@@ -94,13 +89,13 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
                 {isComparisonMode ? 'Keluar Perbandingan' : 'Bandingkan'}
               </Button>
             )}
-            
+
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+              className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors p-1 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-700"
               aria-label="Tutup pratinjau"
             >
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                 <path
                   fillRule="evenodd"
                   d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -109,7 +104,7 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
               </svg>
             </button>
           </div>
-        </div>
+        </DialogHeader>
         
         {/* Content */}
         <div className="flex flex-col lg:flex-row h-full max-h-[calc(100vh-8rem)]">
@@ -231,8 +226,8 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 };
 
