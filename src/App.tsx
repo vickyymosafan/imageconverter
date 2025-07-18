@@ -48,7 +48,7 @@ const AppHeader: React.FC = () => {
                 </div>
               </TooltipTrigger>
               <TooltipContent>
-                <p>ImageConverter Pro - Professional Image Conversion Tool</p>
+                <p>ImageConverter Pro - Alat Konversi Gambar Profesional</p>
               </TooltipContent>
             </Tooltip>
 
@@ -67,9 +67,6 @@ const AppHeader: React.FC = () => {
                   </Badge>
                 </div>
               </div>
-              <p className="hidden sm:block text-sm text-gray-500 dark:text-gray-400 font-medium truncate">
-                Professional Image Conversion Suite
-              </p>
             </div>
           </Flex>
 
@@ -84,12 +81,12 @@ const AppHeader: React.FC = () => {
                       1.2M+
                     </div>
                     <div className="text-xs text-gray-500 dark:text-gray-400">
-                      Files
+                      File
                     </div>
                   </div>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Total files converted by all users</p>
+                  <p>Total file yang dikonversi oleh semua pengguna</p>
                 </TooltipContent>
               </Tooltip>
 
@@ -102,12 +99,12 @@ const AppHeader: React.FC = () => {
                       99.9%
                     </div>
                     <div className="text-xs text-gray-500 dark:text-gray-400">
-                      Success
+                      Berhasil
                     </div>
                   </div>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Conversion success rate</p>
+                  <p>Tingkat keberhasilan konversi</p>
                 </TooltipContent>
               </Tooltip>
             </div>
@@ -119,13 +116,13 @@ const AppHeader: React.FC = () => {
                   <div className="feature-badge flex items-center gap-1.5 lg:gap-2 px-2 lg:px-3 py-1 lg:py-1.5 bg-green-50 dark:bg-green-900/20 rounded-full">
                     <div className="w-1.5 h-1.5 lg:w-2 lg:h-2 bg-green-500 rounded-full animate-pulse"></div>
                     <span className="text-xs lg:text-sm font-medium text-green-700 dark:text-green-400">
-                      <span className="hidden xl:inline">Unlimited</span>
+                      <span className="hidden xl:inline">Tanpa Batas</span>
                       <span className="xl:hidden">∞</span>
                     </span>
                   </div>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Unlimited file uploads - No restrictions!</p>
+                  <p>Upload file tanpa batas - Tidak ada batasan!</p>
                 </TooltipContent>
               </Tooltip>
 
@@ -138,13 +135,13 @@ const AppHeader: React.FC = () => {
                       <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                     <span className="text-xs lg:text-sm font-medium text-blue-700 dark:text-blue-400">
-                      <span className="hidden xl:inline">HD Quality</span>
+                      <span className="hidden xl:inline">Kualitas HD</span>
                       <span className="xl:hidden">HD</span>
                     </span>
                   </div>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>High Definition quality preservation (90-95%)</p>
+                  <p>Preservasi kualitas High Definition (90-95%)</p>
                 </TooltipContent>
               </Tooltip>
 
@@ -163,7 +160,7 @@ const AppHeader: React.FC = () => {
                   </div>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Batch processing for multiple files</p>
+                  <p>Pemrosesan batch untuk banyak file</p>
                 </TooltipContent>
               </Tooltip>
             </div>
@@ -176,7 +173,7 @@ const AppHeader: React.FC = () => {
                 </div>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Toggle light/dark theme</p>
+                <p>Beralih tema terang/gelap</p>
               </TooltipContent>
             </Tooltip>
           </Flex>
@@ -199,17 +196,17 @@ const SubHeader: React.FC<{ onShowTestRunner?: () => void }> = ({ onShowTestRunn
                   <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L9 5.414V17a1 1 0 102 0V5.414l5.293 5.293a1 1 0 001.414-1.414l-7-7z"/>
                   </svg>
-                  <span className="hidden sm:inline">Home</span>
+                  <span className="hidden sm:inline">Beranda</span>
                 </div>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Back to homepage</p>
+                <p>Kembali ke beranda</p>
               </TooltipContent>
             </Tooltip>
             <span className="text-gray-300 dark:text-gray-600 hidden sm:inline">/</span>
             <span className="text-gray-900 dark:text-gray-100 font-medium text-xs sm:text-sm truncate">
-              <span className="hidden sm:inline">Image Converter</span>
-              <span className="sm:hidden">Converter</span>
+              <span className="hidden sm:inline">Konverter Gambar</span>
+              <span className="sm:hidden">Konverter</span>
             </span>
           </div>
 
@@ -221,11 +218,11 @@ const SubHeader: React.FC<{ onShowTestRunner?: () => void }> = ({ onShowTestRunn
                   <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span className="hidden sm:inline">Help</span>
+                  <span className="hidden sm:inline">Bantuan</span>
                 </button>
               </TooltipTrigger>
               <TooltipContent>
-                <p>View help and documentation</p>
+                <p>Lihat bantuan dan dokumentasi</p>
               </TooltipContent>
             </Tooltip>
 
@@ -236,11 +233,11 @@ const SubHeader: React.FC<{ onShowTestRunner?: () => void }> = ({ onShowTestRunn
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
-                  <span className="hidden sm:inline">Settings</span>
+                  <span className="hidden sm:inline">Pengaturan</span>
                 </button>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Application settings</p>
+                <p>Pengaturan aplikasi</p>
               </TooltipContent>
             </Tooltip>
 
@@ -255,11 +252,11 @@ const SubHeader: React.FC<{ onShowTestRunner?: () => void }> = ({ onShowTestRunn
                     <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span className="hidden sm:inline">Tests</span>
+                    <span className="hidden sm:inline">Tes</span>
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Run application tests (Development only)</p>
+                  <p>Jalankan tes aplikasi (Khusus pengembangan)</p>
                 </TooltipContent>
               </Tooltip>
             )}

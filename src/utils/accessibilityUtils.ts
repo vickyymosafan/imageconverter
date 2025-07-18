@@ -228,18 +228,18 @@ export const generateAltText = (
   dimensions?: { width: number; height: number },
   context?: string
 ): string => {
-  let altText = `Image: ${filename}`;
-  
+  let altText = `Gambar: ${filename}`;
+
   if (dimensions) {
     altText += ` (${dimensions.width}x${dimensions.height})`;
   }
-  
-  altText += ` in ${format.toUpperCase()} format`;
-  
+
+  altText += ` dalam format ${format.toUpperCase()}`;
+
   if (context) {
     altText += ` - ${context}`;
   }
-  
+
   return altText;
 };
 
@@ -250,16 +250,16 @@ export const getValidationMessage = (
   value?: any
 ): string => {
   const messages: Record<string, string> = {
-    required: `${field} is required`,
-    invalid: `${field} is invalid`,
-    'too-large': `${field} is too large`,
-    'too-small': `${field} is too small`,
-    'wrong-format': `${field} has wrong format`,
-    'upload-failed': `Failed to upload ${field}`,
-    'conversion-failed': `Failed to convert ${field}`,
+    required: `${field} wajib diisi`,
+    invalid: `${field} tidak valid`,
+    'too-large': `${field} terlalu besar`,
+    'too-small': `${field} terlalu kecil`,
+    'wrong-format': `${field} memiliki format yang salah`,
+    'upload-failed': `Gagal mengunggah ${field}`,
+    'conversion-failed': `Gagal mengkonversi ${field}`,
   };
 
-  return messages[error] || `${field} has an error: ${error}`;
+  return messages[error] || `${field} mengalami kesalahan: ${error}`;
 };
 
 // Loading state announcements
@@ -269,9 +269,9 @@ export const announceLoadingState = (
   details?: string
 ): void => {
   const messages = {
-    loading: `Loading ${context}...`,
-    success: `${context} completed successfully${details ? `: ${details}` : ''}`,
-    error: `Error in ${context}${details ? `: ${details}` : ''}`
+    loading: `Memuat ${context}...`,
+    success: `${context} berhasil diselesaikan${details ? `: ${details}` : ''}`,
+    error: `Kesalahan dalam ${context}${details ? `: ${details}` : ''}`
   };
 
   announceToScreenReader(messages[state], state === 'error' ? 'assertive' : 'polite');
@@ -281,11 +281,11 @@ export const announceLoadingState = (
 export const announceProgress = (
   current: number,
   total: number,
-  context: string = 'operation'
+  context: string = 'operasi'
 ): void => {
   const percentage = Math.round((current / total) * 100);
-  const message = `${context} progress: ${percentage}% complete (${current} of ${total})`;
-  
+  const message = `Progres ${context}: ${percentage}% selesai (${current} dari ${total})`;
+
   // Only announce at certain intervals to avoid spam
   if (percentage % 25 === 0 || current === total) {
     announceToScreenReader(message, 'polite');
@@ -298,12 +298,12 @@ export const announceError = (
   context?: string,
   suggestions?: string[]
 ): void => {
-  let message = context ? `Error in ${context}: ${error}` : `Error: ${error}`;
-  
+  let message = context ? `Kesalahan dalam ${context}: ${error}` : `Kesalahan: ${error}`;
+
   if (suggestions && suggestions.length > 0) {
-    message += `. Suggestions: ${suggestions.join(', ')}`;
+    message += `. Saran: ${suggestions.join(', ')}`;
   }
-  
+
   announceToScreenReader(message, 'assertive');
 };
 
@@ -313,16 +313,16 @@ export const announceSuccess = (
   result?: string,
   nextSteps?: string
 ): void => {
-  let message = `${action} completed successfully`;
-  
+  let message = `${action} berhasil diselesaikan`;
+
   if (result) {
     message += `. ${result}`;
   }
-  
+
   if (nextSteps) {
     message += `. ${nextSteps}`;
   }
-  
+
   announceToScreenReader(message, 'polite');
 };
 
@@ -338,22 +338,22 @@ export const testAccessibility = (element: HTMLElement): {
   // Check for ARIA labels
   if (!element.getAttribute('aria-label') && !element.getAttribute('aria-labelledby')) {
     if (element.tagName === 'BUTTON' || element.tagName === 'INPUT') {
-      issues.push('Missing aria-label or aria-labelledby');
-      suggestions.push('Add descriptive aria-label');
+      issues.push('Tidak ada aria-label atau aria-labelledby');
+      suggestions.push('Tambahkan aria-label yang deskriptif');
     }
   }
 
   // Check for keyboard accessibility
   if (element.onclick && element.tabIndex < 0) {
-    issues.push('Clickable element not keyboard accessible');
-    suggestions.push('Add tabindex="0" or use button element');
+    issues.push('Elemen yang dapat diklik tidak dapat diakses dengan keyboard');
+    suggestions.push('Tambahkan tabindex="0" atau gunakan elemen button');
   }
 
   // Check for focus indicators
   const styles = getComputedStyle(element);
   if (styles.outline === 'none' && !styles.boxShadow.includes('focus')) {
-    issues.push('No visible focus indicator');
-    suggestions.push('Add focus:ring or focus:outline styles');
+    issues.push('Tidak ada indikator fokus yang terlihat');
+    suggestions.push('Tambahkan focus:ring atau focus:outline styles');
   }
 
   // Calculate score

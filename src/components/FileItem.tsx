@@ -198,7 +198,7 @@ const FileItem: React.FC<FileItemProps> = ({
                     </TooltipTrigger>
                     <TooltipContent>
                       <p>Status: {progress.status}</p>
-                      {progress.error && <p>Error: {progress.error}</p>}
+                      {progress.error && <p>Kesalahan: {progress.error}</p>}
                     </TooltipContent>
                   </Tooltip>
                 )}

@@ -1,7 +1,7 @@
 {
-  "name": "ImageConverter Pro - Professional Image Conversion Tool",
+  "name": "ImageConverter Pro - Alat Konversi Gambar Profesional",
   "short_name": "ImageConverter Pro",
-  "description": "Professional image conversion tool with HD quality preservation, unlimited batch processing, and drag & drop interface.",
+  "description": "Alat konversi gambar profesional dengan preservasi kualitas HD, pemrosesan batch tanpa batas, dan antarmuka drag & drop.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

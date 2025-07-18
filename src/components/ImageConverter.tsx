@@ -170,7 +170,7 @@ const ImageConverter: React.FC = () => {
                 loading={converter.state.isProcessing}
                 className="w-full min-h-[48px]"
                 size="lg"
-                aria-label={converter.state.isProcessing ? 'Converting images in progress' : `Convert ${fileUpload.files.length} images to ${converter.state.options.outputFormat} format`}
+                aria-label={converter.state.isProcessing ? 'Konversi gambar sedang berlangsung' : `Konversi ${fileUpload.files.length} gambar ke format ${converter.state.options.outputFormat}`}
               >
                 {converter.state.isProcessing ? 'Mengkonversi...' : `Konversi ${fileUpload.files.length} Gambar`}
               </Button>
@@ -186,7 +186,7 @@ const ImageConverter: React.FC = () => {
                       loading={download.isDownloading}
                       size="md"
                       className="flex-1 min-h-[44px]"
-                      aria-label={`Download all ${converter.state.results.length} converted images as ZIP file`}
+                      aria-label={`Unduh semua ${converter.state.results.length} gambar yang dikonversi sebagai file ZIP`}
                       icon={
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
