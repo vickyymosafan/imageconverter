@@ -4,7 +4,7 @@ import { useImageConverter } from '../hooks/useImageConverter';
 import { useFileUpload } from '../hooks/useFileUpload';
 import { useDownload } from '../hooks/useDownload';
 
-import { Section, Grid, Flex } from './layout/AppLayout';
+import { Section, Grid } from './layout/AppLayout';
 import Card, { CardHeader, CardTitle, CardContent } from './ui/Card';
 import FileUpload from './FileUpload';
 import FileItem from './FileItem';
@@ -147,7 +147,7 @@ const ImageConverter: React.FC = () => {
             <CardTitle>Pengaturan Konversi</CardTitle>
           </CardHeader>
           <CardContent>
-            <Grid cols={2} gap="lg" className="mb-6">
+            <Grid cols={1} gap="md" className="mb-6 sm:grid-cols-2 sm:gap-lg">
               <FormatSelector
                 selectedFormat={converter.state.options.outputFormat}
                 onFormatChange={handleFormatChange}
@@ -162,13 +162,13 @@ const ImageConverter: React.FC = () => {
               />
             </Grid>
 
-            <Flex direction="col" gap="sm" className="sm:flex-row">
+            <div className="space-y-3 sm:space-y-0">
               {/* Primary Action */}
               <Button
                 onClick={handleStartConversion}
                 disabled={!canStartConversion}
                 loading={converter.state.isProcessing}
-                className="flex-1"
+                className="w-full min-h-[48px]"
                 size="lg"
                 aria-label={converter.state.isProcessing ? 'Converting images in progress' : `Convert ${fileUpload.files.length} images to ${converter.state.options.outputFormat} format`}
               >
@@ -176,41 +176,46 @@ const ImageConverter: React.FC = () => {
               </Button>
 
               {/* Secondary Actions */}
-              <Flex gap="sm" className="sm:flex-row">
-                {hasResults && (
+              {(hasResults || !converter.state.isProcessing) && (
+                <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                  {hasResults && (
+                    <Button
+                      variant="outline"
+                      onClick={handleDownloadAll}
+                      disabled={download.isDownloading}
+                      loading={download.isDownloading}
+                      size="md"
+                      className="flex-1 min-h-[44px]"
+                      aria-label={`Download all ${converter.state.results.length} converted images as ZIP file`}
+                      icon={
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                      }
+                    >
+                      <span className="hidden sm:inline">Unduh ZIP</span>
+                      <span className="sm:hidden">ZIP</span>
+                    </Button>
+                  )}
+
                   <Button
-                    variant="outline"
-                    onClick={handleDownloadAll}
-                    disabled={download.isDownloading}
-                    loading={download.isDownloading}
+                    variant="ghost"
+                    onClick={handleClearAll}
+                    disabled={converter.state.isProcessing}
                     size="md"
-                    aria-label={`Download all ${converter.state.results.length} converted images as ZIP file`}
+                    className="flex-1 min-h-[44px] text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
                     icon={
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                       </svg>
                     }
                   >
-                    Unduh ZIP
+                    <span className="hidden sm:inline">Hapus Semua</span>
+                    <span className="sm:hidden">Hapus</span>
                   </Button>
-                )}
-
-                <Button
-                  variant="ghost"
-                  onClick={handleClearAll}
-                  disabled={converter.state.isProcessing}
-                  size="md"
-                  className="text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
-                  icon={
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                    </svg>
-                  }
-                >
-                  Hapus Semua
-                </Button>
-              </Flex>
-            </Flex>
+                </div>
+              )}
+            </div>
           </CardContent>
         </Card>
       )}
@@ -238,7 +243,7 @@ const ImageConverter: React.FC = () => {
             </div>
           </div>
 
-          <Grid cols={2} gap="md">
+          <Grid cols={1} gap="md" className="sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
             {fileUpload.files.map((file) => {
               const result = converter.state.results.find(r => r.id === file.id);
               const progress = converter.state.progress[file.id];

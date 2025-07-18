@@ -127,19 +127,19 @@ const FileItem: React.FC<FileItemProps> = ({
   
   return (
     <div className={`file-card hover-lift animate-fade-in-up ${className}`}>
-      <div className="flex items-start space-x-3">
-        {/* Image Preview */}
+      <div className="flex items-start space-x-2 sm:space-x-3">
+        {/* Image Preview - Responsive sizing */}
         <div className="flex-shrink-0">
           <Tooltip>
             <TooltipTrigger asChild>
               <button
                 onClick={handlePreview}
-                className="relative group overflow-hidden rounded-lg border border-gray-200 dark:border-gray-600 hover:border-primary-300 dark:hover:border-primary-600 transition-colors"
+                className="relative group overflow-hidden rounded-lg border border-gray-200 dark:border-gray-600 hover:border-primary-300 dark:hover:border-primary-600 transition-colors min-w-[44px] min-h-[44px]"
               >
                 <img
                   src={imageFile.preview}
                   alt={imageFile.name}
-                  className="w-16 h-16 object-cover group-hover:scale-105 transition-transform duration-200"
+                  className="w-12 h-12 sm:w-16 sm:h-16 object-cover group-hover:scale-105 transition-transform duration-200"
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-200 flex items-center justify-center">
                   <div className="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-opacity">
@@ -168,7 +168,7 @@ const FileItem: React.FC<FileItemProps> = ({
               <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
                 {imageFile.name}
               </h3>
-              <div className="flex items-center space-x-2 mt-1 flex-wrap gap-1">
+              <div className="flex items-center flex-wrap gap-1 sm:gap-1.5 mt-1">
                 <Badge variant="outline" className="text-xs">
                   {imageFile.format.toUpperCase()}
                 </Badge>
@@ -176,7 +176,7 @@ const FileItem: React.FC<FileItemProps> = ({
                   {formatFileSize(imageFile.size)}
                 </Badge>
                 {imageFile.dimensions && (
-                  <Badge variant="outline" className="text-xs">
+                  <Badge variant="outline" className="text-xs hidden sm:inline-flex">
                     {imageFile.dimensions.width} × {imageFile.dimensions.height}
                   </Badge>
                 )}
@@ -205,14 +205,14 @@ const FileItem: React.FC<FileItemProps> = ({
               </div>
             </div>
             
-            <div className="flex items-center space-x-2 ml-2">
+            <div className="flex items-center space-x-1 sm:space-x-2 ml-1 sm:ml-2">
               {getStatusIcon()}
               {showRemoveButton && (
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button
                       onClick={() => onRemove(imageFile.id)}
-                      className="text-gray-400 hover:text-red-500 transition-colors p-1 rounded hover:bg-red-50 dark:hover:bg-red-900/20"
+                      className="text-gray-400 hover:text-red-500 transition-colors p-2 sm:p-1 rounded hover:bg-red-50 dark:hover:bg-red-900/20 min-w-[44px] min-h-[44px] flex items-center justify-center"
                     >
                       <RemoveIcon size="sm" />
                     </button>
@@ -247,17 +247,17 @@ const FileItem: React.FC<FileItemProps> = ({
             <div className="mt-3 space-y-2">
               {getCompressionInfo()}
               
-              <div className="flex space-x-2">
+              <div className="flex flex-col sm:flex-row gap-2 sm:space-x-2">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
-                      size="sm"
+                      size="md"
                       variant="outline"
                       onClick={handlePreview}
-                      className="flex-1"
+                      className="flex-1 min-h-[44px]"
                     >
-                      <PreviewIcon className="mr-1" size="sm" />
-                      Pratinjau
+                      <PreviewIcon className="mr-1 sm:mr-2" size="sm" />
+                      <span className="text-sm">Pratinjau</span>
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -267,12 +267,12 @@ const FileItem: React.FC<FileItemProps> = ({
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
-                      size="sm"
+                      size="md"
                       onClick={handleDownload}
-                      className="flex-1"
+                      className="flex-1 min-h-[44px]"
                     >
-                      <DownloadIcon className="mr-1" size="sm" />
-                      Unduh
+                      <DownloadIcon className="mr-1 sm:mr-2" size="sm" />
+                      <span className="text-sm">Unduh</span>
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>

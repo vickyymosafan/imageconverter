@@ -5,7 +5,6 @@ import Button from './ui/Button';
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/shadcn/tooltip';
 import { Badge } from './ui/shadcn/badge';
 import { UploadIcon, AddIcon, QualityIcon, CheckIcon } from './ui/common/Icons';
-import { LoadingSpinner } from './ui/common/LoadingStates';
 
 export interface FileUploadProps {
   onFilesAdded: (files: ImageFile[]) => void;
@@ -168,13 +167,14 @@ const FileUpload: React.FC<FileUploadProps> = ({
               </div>
               
               <div className="text-center space-y-2">
-                <p className="text-lg font-medium text-gray-900 dark:text-gray-100">
+                <p className="text-base sm:text-lg font-medium text-gray-900 dark:text-gray-100">
                   {isDragOver ? 'Letakkan gambar di sini' : 'Unggah gambar Anda'}
                 </p>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Seret dan lepas file di sini, atau{' '}
+                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 px-2">
+                  <span className="hidden sm:inline">Seret dan lepas file di sini, atau </span>
                   <span className="text-primary-600 dark:text-primary-400 font-medium">
-                    klik untuk memilih
+                    <span className="sm:hidden">Ketuk untuk memilih file</span>
+                    <span className="hidden sm:inline">klik untuk memilih</span>
                   </span>
                 </p>
               </div>
@@ -184,11 +184,11 @@ const FileUpload: React.FC<FileUploadProps> = ({
                   <p className="text-xs text-gray-500 dark:text-gray-400">
                     Format yang didukung:
                   </p>
-                  <div className="flex flex-wrap justify-center gap-1">
+                  <div className="flex flex-wrap justify-center gap-1 sm:gap-1.5">
                     {supportedFormats.map((format) => (
                       <Tooltip key={format}>
                         <TooltipTrigger>
-                          <Badge variant="outline" className="text-xs">
+                          <Badge variant="outline" className="text-xs px-2 py-1">
                             {format.toUpperCase()}
                           </Badge>
                         </TooltipTrigger>
@@ -199,7 +199,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
                     ))}
                   </div>
                 </div>
-                <div className="flex items-center justify-center space-x-4 text-xs text-gray-500 dark:text-gray-400">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-xs text-gray-500 dark:text-gray-400">
                   <Tooltip>
                     <TooltipTrigger>
                       <div className="flex items-center space-x-1">
@@ -229,16 +229,17 @@ const FileUpload: React.FC<FileUploadProps> = ({
                 <TooltipTrigger asChild>
                   <Button
                     variant="outline"
-                    size="sm"
+                    size="md"
                     disabled={disabled}
                     onClick={(e) => {
                       e.stopPropagation();
                       handleClick();
                     }}
-                    className="transition-all duration-200 hover:scale-105"
+                    className="transition-all duration-200 hover:scale-105 min-h-[44px] px-6"
                   >
                     <AddIcon className="mr-2" size="sm" />
-                    Pilih File
+                    <span className="hidden sm:inline">Pilih File</span>
+                    <span className="sm:hidden">Pilih</span>
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
